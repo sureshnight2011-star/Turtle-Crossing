@@ -30,10 +30,14 @@ class Main:
 
         self.is_running = True
 
-    '''def setup(self):
+    def new_game_setup(self):
+        self.screen.clear()
+
+
+    def check_play_again(self):
         pass
 
-    def run_game(self):
+    '''def run_game(self):
         while self.is_running:
             pass'''
 
