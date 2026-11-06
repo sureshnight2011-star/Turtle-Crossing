@@ -1,7 +1,12 @@
+# Features to Add:
+# 1. Figure out how to have the score go up by 1 every time the player moves forward in the game, not just forward.
+# 2. Figure out how to implement different levels in a simple way.
+# 3. Figure out the car speeds for the different cars in each level.
 from turtle import Screen, Turtle
+import time
 from player import Player
-from car import Car
 from score_board import ScoreBoard
+from car_manager import CarManager
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
@@ -14,8 +19,8 @@ class Main:
         self.screen.title("Turtle Crossing")
 
         self.score_board = ScoreBoard()
-        self.score_board.goto((SCREEN_WIDTH / -2) + 25, (SCREEN_HEIGHT / 2) - 50)
-        self.score_board.write(f"{self.score_board.score}", align="center", font=("Arial", 24, "normal"))
+        self.score_board.goto((SCREEN_WIDTH / -2) + 45, (SCREEN_HEIGHT / 2) - 50)
+        self.score_board.write(f"Level: {self.score_board.level}""\n"f"Score: {self.score_board.score}", align="center", font=("Arial", 16, "normal"))
 
         self.player = Player()
         self.player.hideturtle()
@@ -27,6 +32,8 @@ class Main:
         self.screen.onkeypress(self.player.move_down, "Down")
         self.screen.onkeypress(self.player.move_left, "Left")
         self.screen.onkeypress(self.player.move_right, "Right")
+
+        self.car_manager = CarManager()
 
         self.is_running = True
 
@@ -49,22 +56,17 @@ class Main:
     def check_play_again(self):
         pass
 
-    '''def run_game(self):
+    def run_game(self):
         while self.is_running:
-            pass'''
+            self.car_manager.create_car()
+            self.car_manager.move_cars()
 
-    def start_game(self):
-        self.new_game_setup()
+            time.sleep(0.01)
 
     def setup_screen(self):
         drawing_pen = Turtle()
         drawing_pen.color("white")
         drawing_pen.speed(0)
-        '''for x in range(int(SCREEN_WIDTH / -2), SCREEN_WIDTH + 1, 50):
-            drawing_pen.penup()
-            drawing_pen.setpos(x, (SCREEN_HEIGHT / -2))
-            drawing_pen.pendown()
-            drawing_pen.goto(x, SCREEN_HEIGHT / 2)'''
         for y in range(int(SCREEN_HEIGHT / -2), SCREEN_HEIGHT + 1, 100):
             drawing_pen.penup()
             drawing_pen.setpos((SCREEN_WIDTH / -2) , y)
@@ -74,5 +76,5 @@ class Main:
 if __name__ == '__main__':
     main = Main()
     main.setup_screen()
-    # main.new_game_setup()
+    main.run_game()
     main.screen.mainloop()
