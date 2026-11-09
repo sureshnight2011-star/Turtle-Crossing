@@ -2,12 +2,13 @@
 # 1. Figure out how to have the score go up by 1 every time the player moves forward in the game, not just forward.
 # 2. Figure out how to implement different levels in a simple way.
 # Figured #2 out, just reuse the same setup layout with the drawing pen, and increase the car speeds.
-
 # 3. Figure out the car speeds for the different cars in each level.
+# 4. Ask the player at the start of the game for their time limit, to get the highest score that they can.
+# 5. Save that player's score in a file, where a ton of more features can be added onto that.
+
 # Issues to Fix:
-# 1. Fix player staying invisible after leveling up.
-# 2. Run Debug on Python main.py file to import terminator to prevent an error.
-from turtle import Screen, Turtle
+# 1. Figure out why a second screen pops up after I close the GUI window, after every time I level up.
+from turtle import Screen, Turtle, Terminator
 import time
 from player import Player
 from score_board import ScoreBoard
@@ -25,7 +26,9 @@ class Main:
 
         self.score_board = ScoreBoard()
         self.score_board.goto((SCREEN_WIDTH / -2) + 45, (SCREEN_HEIGHT / 2) - 50)
-        self.score_board.write(f"Level: {self.score_board.level}""\n"f"Score: {self.score_board.score}", align="center", font=("Arial", 16, "normal"))
+        self.score_board.write(f"Level: {self.score_board.level}""\n"f"Score: {self.score_board.score}",
+                               align="center",
+                               font=("Arial", 16, "normal"))
 
         self.player = Player()
         self.player.hideturtle()
@@ -47,17 +50,11 @@ class Main:
         self.is_running = True
 
     def object_setup(self):
-        self.score_board.goto((SCREEN_WIDTH / -2) + 45, (SCREEN_HEIGHT / 2) - 50)
-        self.score_board.write(f"Level: {self.score_board.level}""\n"f"Score: {self.score_board.score}",
-                               align="center",
-                               font=("Arial", 16, "normal"))
+        self.score_board.update_level()
 
         self.player.hideturtle()
-        '''self.player.penup()
-        self.player.shape("triangle")
-        self.player.color("white")'''
-        self.player.setpos(0, (SCREEN_HEIGHT/-2) + 50)
-        self.player.left(90)
+        self.player.setpos(x=0, y=(-SCREEN_HEIGHT / 2) + 50)
+        self.player.setheading(90)
         self.player.showturtle()
 
     def screen_setup(self):
@@ -68,27 +65,25 @@ class Main:
             self.drawing_pen.goto((SCREEN_WIDTH / 2), y)
 
     def run_game(self):
-        while self.is_running:
-            if self.player.xcor() >= (SCREEN_WIDTH / 2) - 10:
-                self.player.setx((SCREEN_WIDTH / 2) - 10)
-            elif self.player.xcor() <= -SCREEN_WIDTH / 2:
-                self.player.setx(-SCREEN_WIDTH / 2)
-            elif self.player.ycor() <= (-SCREEN_HEIGHT / 2) + 10:
-                self.player.sety((-SCREEN_HEIGHT / 2) + 10)
-            elif self.player.ycor() >= (SCREEN_HEIGHT / 2):
-                self.level_up()
+        try:
+            while self.is_running:
+                if self.player.xcor() >= (SCREEN_WIDTH / 2) - 10:
+                    self.player.setx((SCREEN_WIDTH / 2) - 10)
+                elif self.player.xcor() <= (-SCREEN_WIDTH / 2) + 5:
+                    self.player.setx((-SCREEN_WIDTH / 2) + 5)
+                elif self.player.ycor() <= (-SCREEN_HEIGHT / 2) + 10:
+                    self.player.sety((-SCREEN_HEIGHT / 2) + 10)
+                elif self.player.ycor() >= (SCREEN_HEIGHT / 2):
+                    self.level_up()
 
-            self.car_manager.create_car()
-            self.car_manager.move_cars()
+                self.car_manager.create_car()
+                self.car_manager.move_cars()
 
-            time.sleep(0.01)
+                time.sleep(0.01)
+        except Terminator:
+            pass
 
     def level_up(self):
-        self.score_board.level += 1
-
-        self.screen.clear()
-        self.screen.bgcolor("black")
-
         self.screen_setup()
         self.object_setup()
         self.run_game()
