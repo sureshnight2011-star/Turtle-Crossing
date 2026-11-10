@@ -20,6 +20,7 @@ class CarManager:
             new_car.shape("square")
             new_car.showturtle()
             new_car.shapesize(stretch_wid=2, stretch_len=4)
+            self.all_cars.append(new_car)
 
     def move_cars(self):
         for car in self.all_cars:

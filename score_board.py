@@ -13,5 +13,12 @@ class ScoreBoard(Turtle):
         self.clear()
         self.level += 1
         self.write(f"Level: {self.level}""\n"f"Score: {self.score}",
-                               align="center",
-                               font=("Arial", 16, "normal"))
+                   align="center",
+                   font=("Arial", 16, "normal"))
+
+    def update_score(self):
+        self.clear()
+        self.score += 1
+        self.write(f"Level: {self.level}""\n"f"Score: {self.score}",
+                   align="center",
+                   font=("Arial", 16, "normal"))
