@@ -7,7 +7,7 @@
 # 5. Save that player's score in a file, where a ton of more features can be added onto that.
 
 # Issues to Fix:
-# 1. Figure out why a second screen pops up after I close the GUI window, after every time I level up.
+
 from turtle import Screen, Turtle, Terminator
 import time
 from player import Player
@@ -86,7 +86,6 @@ class Main:
     def level_up(self):
         self.screen_setup()
         self.object_setup()
-        self.run_game()
 
     def check_play_again(self):
         pass
