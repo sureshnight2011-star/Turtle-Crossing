@@ -23,37 +23,23 @@ class CarManager:
 
     def set_up(self):
         if random.randint(1, 40) == 1:
-            if random.randint(1, 6) == 1:
+            lane = random.randint(1, 6)
+
+            lane_coordinates = {
+                1: ((-SCREEN_HEIGHT / 2) + 125, 180, SCREEN_WIDTH / 2),
+                2: ((-SCREEN_HEIGHT / 2) + 175, 0, -SCREEN_WIDTH / 2),
+                3: ((SCREEN_HEIGHT / 2) - 275, 180, SCREEN_WIDTH / 2),
+                4: ((SCREEN_HEIGHT / 2) - 225, 0, -SCREEN_WIDTH / 2),
+                5: ((SCREEN_HEIGHT / 2) - 75, 180, SCREEN_WIDTH / 2),
+                6: ((SCREEN_HEIGHT / 2) - 25, 0, -SCREEN_WIDTH / 2),
+            }
+
+            if lane in lane_coordinates:
+                y_pos, heading, x_pos = lane_coordinates[lane]
+
                 car = self.car()
-                car.setheading(180)
-                car.setpos(SCREEN_WIDTH / 2, (-SCREEN_HEIGHT / 2) + 125)
-                car.showturtle()
-                self.all_cars.append(car)
-            elif random.randint(1, 6) == 2:
-                car = self.car()
-                car.setpos(-SCREEN_WIDTH / 2, (-SCREEN_HEIGHT / 2) + 175)
-                car.showturtle()
-                self.all_cars.append(car)
-            elif random.randint(1, 6) == 3:
-                car = self.car()
-                car.setheading(180)
-                car.setpos(SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 275)
-                car.showturtle()
-                self.all_cars.append(car)
-            elif random.randint(1, 6) == 4:
-                car = self.car()
-                car.setpos(-SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 225)
-                car.showturtle()
-                self.all_cars.append(car)
-            elif random.randint(1, 6) == 5:
-                car = self.car()
-                car.setheading(180)
-                car.setpos(SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 75)
-                car.showturtle()
-                self.all_cars.append(car)
-            elif random.randint(1, 6) == 6:
-                car = self.car()
-                car.setpos(-SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 25)
+                car.setheading(heading)
+                car.setpos(x_pos, y_pos)
                 car.showturtle()
                 self.all_cars.append(car)
 
