@@ -9,16 +9,17 @@ class ScoreBoard(Turtle):
         self.score = 0
         self.level = 1
 
-    def update_level(self):
+    def render(self):
+        """Helper method to handle the heavy lifting of clearing and writing."""
         self.clear()
-        self.level += 1
         self.write(f"Level: {self.level}""\n"f"Score: {self.score}",
                    align="center",
                    font=("Arial", 16, "normal"))
 
+    def update_level(self):
+        self.level += 1
+        self.render()
+
     def update_score(self):
-        self.clear()
         self.score += 1
-        self.write(f"Level: {self.level}""\n"f"Score: {self.score}",
-                   align="center",
-                   font=("Arial", 16, "normal"))
+        self.render()
