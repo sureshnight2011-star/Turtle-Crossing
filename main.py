@@ -1,5 +1,5 @@
 # Features to Add:
-# 1. Figure out how to clear the existing cars from the screen.
+# 1. Figure out why whenever I reach a higher x_cor in the game, the score goes up, too.
 # 2. Ask the player at the start of the game for their time limit, to get the highest score that they can.
 # 3. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
 
@@ -100,6 +100,9 @@ class Main:
 
     def level_up(self):
         self.screen_setup()
+        for car in self.car_manager.all_cars:
+            car.hideturtle()
+            self.car_manager.all_cars.remove(car)
         self.object_setup()
 
     def check_play_again(self):
