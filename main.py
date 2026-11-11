@@ -1,5 +1,5 @@
 # Features to Add:
-# 1. Figure out why whenever I reach a higher x_cor in the game, the score goes up, too.
+# 1. Add a boundary line that increase over time, making the player having to constantly move, and not wait.
 # 2. Ask the player at the start of the game for their time limit, to get the highest score that they can.
 # 3. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
 
@@ -70,6 +70,8 @@ class Main:
 
                 for car in self.car_manager.all_cars:
                     if self.player.distance(car) < 40:
+                        self.car_manager.clear_cars()
+                        self.player.hideturtle()
                         self.score_board.losing_screen()
                         self.is_running = False
                 if self.player.ycor() > y_cor:
@@ -99,10 +101,8 @@ class Main:
             pass
 
     def level_up(self):
+        self.car_manager.clear_cars()
         self.screen_setup()
-        for car in self.car_manager.all_cars:
-            car.hideturtle()
-            self.car_manager.all_cars.remove(car)
         self.object_setup()
 
     def check_play_again(self):

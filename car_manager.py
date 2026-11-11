@@ -22,7 +22,7 @@ class CarManager:
         return new_car
 
     def set_up(self):
-        if random.randint(1, 40) == 1:
+        if random.randint(1, 5) == 1:
             lane = random.randint(1, 6)
 
             lane_coordinates = {
@@ -57,3 +57,8 @@ class CarManager:
     def move_cars(self):
         for car in self.all_cars:
             car.forward(self.car_speed)
+
+    def clear_cars(self):
+        for car in self.all_cars:
+            car.hideturtle()
+        self.all_cars.clear()
