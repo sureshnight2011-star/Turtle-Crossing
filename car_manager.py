@@ -9,6 +9,7 @@ colors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "brown",
 class CarManager:
     def __init__(self):
         self.all_cars = []
+        self.car_speed = 1
 
     def car(self):
         new_car = Turtle()
@@ -17,7 +18,6 @@ class CarManager:
         new_car.penup()
         new_car.shape("square")
         new_car.shapesize(stretch_wid=2, stretch_len=4)
-        new_car.speed(1)
 
         return new_car
 
@@ -59,4 +59,4 @@ class CarManager:
 
     def move_cars(self):
         for car in self.all_cars:
-            car.forward(1)
+            car.forward(self.car_speed)

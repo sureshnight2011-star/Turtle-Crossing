@@ -1,9 +1,8 @@
 # Features to Add:
 # 1. Figure out how to deal with overlapping cars.
-# 2. Figure out the car speeds for the different cars in each level.
-# 3. Figure out how to clear the existing cars from the screen, and then increase the speed of the car.
-# 4. Ask the player at the start of the game for their time limit, to get the highest score that they can.
-# 5. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
+# 2. Figure out how to clear the existing cars from the screen, and then increase the speed of the car.
+# 3. Ask the player at the start of the game for their time limit, to get the highest score that they can.
+# 4. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
 
 from turtle import Screen, Turtle, Terminator
 from _tkinter import TclError
@@ -50,6 +49,8 @@ class Main:
 
     def object_setup(self):
         self.score_board.update_level()
+
+        self.car_manager.car_speed += 1
 
         self.player.hideturtle()
         self.player.setpos(x=0, y=(-SCREEN_HEIGHT / 2) + 50)
