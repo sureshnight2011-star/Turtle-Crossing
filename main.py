@@ -1,12 +1,12 @@
 # Features to Add:
-# 1. Figure out how to have the cars spawn at different parts of the game, on either side.
-# 2. Figure out the car speeds for the different cars in each level.
-# 3. Ask the player at the start of the game for their time limit, to get the highest score that they can.
-# 4. Save that player's score in a file, where a ton of more features can be added onto that.
-
-# Issues to Fix:
+# 1. Figure out how to deal with overlapping cars.
+# 2. Figure out how to deal with the Tkinter error.
+# 3. Figure out the car speeds for the different cars in each level.
+# 4. Ask the player at the start of the game for their time limit, to get the highest score that they can.
+# 5. Save that player's score in a file, where a ton of more features can be added onto that.
 
 from turtle import Screen, Turtle, Terminator
+from _tkinter import TclError
 import time
 from player import Player
 from score_board import ScoreBoard
@@ -82,13 +82,16 @@ class Main:
                     self.level_up()
                     y_cor = self.player.ycor()
 
-                self.car_manager.create_car()
+                self.car_manager.set_up()
                 self.car_manager.move_cars()
 
                 self.screen.update()
 
                 time.sleep(0.01)
         except Terminator:
+            pass
+
+        except TclError:
             pass
 
     def level_up(self):
