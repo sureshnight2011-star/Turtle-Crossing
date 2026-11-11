@@ -17,6 +17,7 @@ class CarManager:
         new_car.penup()
         new_car.shape("square")
         new_car.shapesize(stretch_wid=2, stretch_len=4)
+        new_car.speed(1)
 
         return new_car
 

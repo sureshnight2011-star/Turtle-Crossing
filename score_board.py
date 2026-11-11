@@ -23,3 +23,9 @@ class ScoreBoard(Turtle):
     def update_score(self):
         self.score += 1
         self.render()
+
+    def losing_screen(self):
+        self.goto(0, 0)
+        self.write("You Lost!""\n"f"Level: {self.level} Score: {self.score}",
+                   align="center",
+                   font=("Arial", 16, "normal"))
