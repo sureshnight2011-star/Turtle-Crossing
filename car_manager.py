@@ -37,11 +37,22 @@ class CarManager:
             if lane in lane_coordinates:
                 y_pos, heading, x_pos = lane_coordinates[lane]
 
-                car = self.car()
-                car.setheading(heading)
-                car.setpos(x_pos, y_pos)
-                car.showturtle()
-                self.all_cars.append(car)
+                can_spawn = True
+                for car in self.all_cars:
+                    if abs(car.ycor() - y_pos) < 5:
+                        if x_pos > 0 and car.xcor() > x_pos - 120:
+                            can_spawn = False
+                            break
+                        elif x_pos < 0 and car.xcor() < x_pos + 120:
+                            can_spawn = False
+                            break
+
+                if can_spawn:
+                    car = self.car()
+                    car.setheading(heading)
+                    car.setpos(x_pos, y_pos)
+                    car.showturtle()
+                    self.all_cars.append(car)
 
     def move_cars(self):
         for car in self.all_cars:
