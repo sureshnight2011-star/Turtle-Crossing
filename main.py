@@ -1,7 +1,10 @@
 # Features to Add:
-# 1. Add a boundary line that increase over time, making the player having to constantly move, and not wait.
-# 2. Ask the player at the start of the game for their time limit, to get the highest score that they can.
-# 3. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
+# 1. Add play again feature.
+# 2. If the lava touches the cars, clear the cars from the screen, or maybe better yet, later on add a visual fire burning feature.
+# 3. Ask the player at the start of the game for their time limit, to get the highest score that they can.
+# 4. Save that player's score in a file, along with the level, where a ton of more features can be added onto that.
+# 5. Add a visual car shape to the cars.
+# 6. Add a visual turtle shape to the player.
 
 from turtle import Screen, Turtle, Terminator
 from _tkinter import TclError
@@ -36,6 +39,16 @@ class Main:
         self.drawing_pen.color("white")
         self.drawing_pen.speed(0)
 
+        self.boundary_line = Turtle()
+        self.boundary_line.color("red")
+        self.boundary_line.hideturtle()
+        self.boundary_line.speed(0)
+        self.boundary_line.penup()
+        self.boundary_line.setpos((-SCREEN_WIDTH / 2) + 10, -SCREEN_HEIGHT / 2)
+        self.boundary_line.pendown()
+        self.boundary_line.goto((SCREEN_WIDTH / 2) + 10, -SCREEN_HEIGHT / 2)
+        self.boundary_line.showturtle()
+
         self.screen.listen()
         self.screen.onkey(self.player.move_up, "Up")
         self.screen.onkey(self.player.move_down, "Down")
@@ -48,6 +61,12 @@ class Main:
 
     def object_setup(self):
         self.score_board.update_level()
+
+        self.boundary_line.clear()
+        self.boundary_line.penup()
+        self.boundary_line.setpos((-SCREEN_WIDTH / 2) + 10, -SCREEN_HEIGHT / 2)
+        self.boundary_line.pendown()
+        self.boundary_line.goto((SCREEN_WIDTH / 2) + 10, -SCREEN_HEIGHT / 2)
 
         self.car_manager.car_speed += 1
 
@@ -67,6 +86,12 @@ class Main:
         y_cor = self.player.ycor()
         try:
             while self.is_running:
+
+                if self.player.ycor() <= self.boundary_line.ycor():
+                    self.car_manager.clear_cars()
+                    self.player.hideturtle()
+                    self.score_board.losing_screen()
+                    self.is_running = False
 
                 for car in self.car_manager.all_cars:
                     if self.player.distance(car) < 40:
@@ -91,6 +116,8 @@ class Main:
                 self.car_manager.set_up()
                 self.car_manager.move_cars()
 
+                self.set_boundary()
+
                 self.screen.update()
 
                 time.sleep(0.01)
@@ -99,6 +126,23 @@ class Main:
 
         except TclError:
             pass
+
+    def set_boundary(self):
+        previous_x = self.boundary_line.xcor()
+        previous_y = self.boundary_line.ycor()
+
+        self.boundary_line.penup()
+        self.boundary_line.hideturtle()
+
+        new_x = previous_x + 0.1
+        new_y = previous_y + 0.1
+
+        self.boundary_line.setx(new_x)
+        self.boundary_line.sety(new_y)
+        self.boundary_line.left(180)
+        self.boundary_line.pendown()
+        self.boundary_line.goto(-new_x, new_y)
+        self.boundary_line.showturtle()
 
     def level_up(self):
         self.car_manager.clear_cars()
